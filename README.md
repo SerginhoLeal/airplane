@@ -1,5 +1,5 @@
 # endpoints
-m## login
+## login
 ```
   endpoint: /api/authentication
   method: POST
