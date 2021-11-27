@@ -32,27 +32,38 @@ export class HomeController {
 
       return res.json(create);
     }catch(err){
-      console.log(err);
+      return(err);
     }
   }
 
-  async update (req:Request, res:Response){
+  async update (req:any, res:Response){
     const {
       title,
       description,
       value,
     } = req.body;
-    const update = await Home.findByIdAndUpdate(req.params.id, {
-      title,
-      description,
-      value,
-    }, {
-      new: true
-    });
-    return res.json({ success: true })
+
+    const service_update = await Home.findById(req.params.id);
+
+    if(String(service_update.creator) !== req.userId) return res.status(400).json({ is_not_you: true })
+
+    try {
+      await Home.findByIdAndUpdate(req.params.id, {
+        title,
+        description,
+        value,
+      }, {
+        new: true
+      });
+      return res.json({ success: true })
+    } catch (error) {
+      
+    }
   }
 
-  async delete (req:Request, res:Response){
+  async delete (req:any, res:Response){
+    const service_update = await Home.findById(req.params.id);
+    if(String(service_update.creator) !== req.userId) return res.status(400).json({ is_not_you: true })
     try {
       await Home.findByIdAndRemove(req.params.id)
       return res.json({success: true})
