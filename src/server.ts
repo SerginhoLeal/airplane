@@ -11,12 +11,7 @@ app.use(express.json()); // Sem isso, todas as requisições feito pelo insomnia
 
 app.use(cors());
 
-mongoose.connect(
-  process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+mongoose.connect(process.env.MONGO_URL);
 
 app.use('/api', routes);
 
