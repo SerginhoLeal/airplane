@@ -1,5 +1,5 @@
 # endpoints
-m## login
+## login
 ```
   endpoint: /api/authentication
   method: POST
@@ -7,7 +7,11 @@ m## login
     name: string
     password: string
   }
-  sucesso: status 200
+  ---------- respostas ----------
+  sucesso: {
+    Auth: objeto, 
+    token: string
+  }
   falha: status 400
 ```
 ## cadastro
@@ -17,28 +21,27 @@ m## login
   body:{
     name: string,
     email: string,
-    cpf: string,
+    cpf: number,
     picture: string,
     password: string,
     confPass: string,
   }
-  sucesso: status 200
-  falha: status 400
+  ---------- respostas ----------
+  email_in_use: boolean e aparece caso um email já exista 
+  password_fail: boolean e aparece caso a confirmação da senha seja invalida
+
+  sucesso: status(200).json({ success: true })
 ```
 ## serviços
 ```
   endpoint: /api/index
   method: GET
-  sucesso: status 200
-  falha: status 400
 ```
 
 ## filtro de serviços
 ```
-  endpoint: /api/index
+  endpoint: /api/index?filter="title"
   method: GET
-  sucesso: status 200
-  falha: status 400
 ```
 
 ## cadastros de serviços
@@ -54,8 +57,8 @@ m## login
     description: string,
     value: number,
   }
-  sucesso: status 200
-  falha: status 400
+  ---------- respostas ----------
+  sucesso: status(200).json({ success: true })
 ```
 
 ## edição de serviços
@@ -71,8 +74,10 @@ m## login
     description: string,
     value: number,
   }
-  sucesso: status 200
-  falha: status 400
+  ---------- respostas ----------
+  is_not_you: boolean e aparece quando não é o dono do serviço
+
+  sucesso: status(200).json({ success: true })
 ```
 
 ## excluindo um serviço
@@ -83,6 +88,8 @@ m## login
     'Content-Type':'application/json',
     'Authorization':'Bearer "token do usuário logado"'
   }
-  sucesso: status 200
-  falha: status 400
+  ---------- respostas ----------
+  is_not_you: boolean e aparece quando não é o dono do serviço
+
+  sucesso: status(200).json({ success: true })
 ```
