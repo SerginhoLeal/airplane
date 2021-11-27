@@ -40,7 +40,7 @@ export class UserController {
       picture
      } = req.body;
 
-    if (password !== confPass) return res.status(400).json({ message: 'confirme a sua senha' })
+    if (password !== confPass) return res.status(400).json({ password_fail: true })
 
     try {
       const create = await User.create({
