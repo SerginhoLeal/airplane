@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.routes = void 0;
+const express_1 = require("express");
+const middleware_1 = __importDefault(require("./middleware"));
+const home_1 = require("./home");
+const auth_1 = require("./auth");
+const homeController = new home_1.HomeController();
+const userController = new auth_1.UserController();
+const routes = (0, express_1.Router)();
+exports.routes = routes;
+routes.post('/authentication', userController.login);
+routes.post('/registering', userController.create);
+routes.get('/index', homeController.index);
+routes.use(middleware_1.default);
+routes.post('/create', homeController.create);
+routes.put('/update/:id', homeController.update);
+routes.delete('/delete/:id', homeController.delete);
+routes.post('/email/:id', homeController.email);
+routes.get('/accepting/:id', homeController.accepting);
